@@ -50,10 +50,6 @@ module.exports = function (options) {
           choices: choices
         }, {
           type: 'input',
-          name: 'scope',
-          message: 'Denote the scope of this change ($location, $browser, $compile, etc.):\n'
-        }, {
-          type: 'input',
           name: 'subject',
           message: 'Write a short, imperative tense description of the change:\n'
         }, {
@@ -76,12 +72,8 @@ module.exports = function (options) {
           width: maxLineWidth
         };
 
-        // parentheses are only needed when a scope is present
-        var scope = answers.scope.trim();
-        scope = scope ? '(' + answers.scope.trim() + ')' : '';
-
         // Hard limit this line
-        var head = (answers.type + scope + ': ' + answers.subject.trim()).slice(0, maxLineWidth);
+        var head = (answers.type + ': ' + answers.subject.trim()).slice(0, maxLineWidth);
 
         // Wrap these lines at 100 characters
         var body = wrap(answers.body, wrapOptions);
