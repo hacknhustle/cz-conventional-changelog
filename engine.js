@@ -20,6 +20,20 @@ module.exports = function (options) {
     };
   });
 
+  var projects = [{
+    name: 'Pricing engine and anything related to the eventual calculation of a price.',
+    value: 'pricing-engine'
+  }, {
+    name: 'API v2 and migration to API v2',
+    value: 'api-v2'
+  }, {
+    name: 'Data Warehousing and tracking',
+    value: 'data-warehousing-tracking'
+  }, {
+    name: 'Other (or if you have no idea)',
+    value: ''
+  }];
+
   return {
     // When a user runs `git cz`, prompter will
     // be executed. We pass you cz, which currently
@@ -58,6 +72,15 @@ module.exports = function (options) {
           message: 'Provide a longer description of the change:\n'
         }, {
           type: 'input',
+          name: 'hours',
+          message: 'Provide the # of hours spent on this commit (ex: "2" or "2.5"):\n'
+        }, {
+          type: 'list',
+          name: 'project',
+          message: 'Select the project this commit should fall into:',
+          choices: projects
+        }, {
+          type: 'input',
           name: 'footer',
           message: 'List any breaking changes or issues closed by this change:\n'
         }
@@ -77,9 +100,28 @@ module.exports = function (options) {
 
         // Wrap these lines at 100 characters
         var body = wrap(answers.body, wrapOptions);
+
+        // Add SRED.io code
+        var hours = '';
+        var project = '';
+
+        if (answers.hours.trim()) {
+          hours = '-d ' + answers.hours.trim();
+        }
+
+        if (answers.project.trim()) {
+          project = '-p ' + answers.project;
+        }
+
+        var sred = ''
+
+        if (hours || project) {
+          sred = 'sred ' + [hours, project].join(' ')
+        }
+
         var footer = wrap(answers.footer, wrapOptions);
 
-        commit(head + '\n\n' + body + '\n\n' + footer);
+        commit([head, body, footer, sred].join('\n\n'));
       });
     }
   };
