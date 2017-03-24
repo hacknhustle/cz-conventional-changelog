@@ -38,7 +38,7 @@ module.exports = function (options) {
     name: 'Work Categorization',
     value: 'data-mutation'
   }, {
-    name: 'Unknown Problem Area',
+    name: 'No Problem Area',
     value: ''
   }];
 
@@ -106,23 +106,32 @@ module.exports = function (options) {
         // Add SRED.io code
         var hours = '';
         var project = '';
+        var challenge = '';
 
         if (answers.hours.trim()) {
           hours = '-d ' + answers.hours.trim();
         }
-
-        if (answers.project.trim()) {
+ 
+        if (answers.project.trim() && answers.project !== "") {
           project = '-p ' + answers.project;
         }
 
-        if (answers.challenge.trim()) {
+        if (answers.challenge.trim() && answers.challenge !== "") {
           challenge = '-c ' + answers.challenge;
         }
 
         var sred = ''
 
-        if (hours || project || challenge) {
-          sred = 'sred ' + [hours, project, challenge].join(' ')
+        if (hours) {
+          sred = 'sred ' + [hours].join(' ');
+        }
+
+        if (project != '') {
+          sred = sred + [project].join(' ');
+        }
+
+        if (challenge != '') {
+          sred = sred + [challenge].join(' ');
         }
 
         commit([head, sred].join('\n\n'));
