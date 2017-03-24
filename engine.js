@@ -21,28 +21,26 @@ module.exports = function (options) {
   }); 
 
   var projects = [{
-    name: 'Streaming Event Data - Real-Time Streaming and Translation of Event Data From External Systems.',
+    name: 'Streaming Event Data',
     value: 'streaming-events'
   }, {
     name: 'No SR&ED Project',
     value: ''
   }];
 
-  // var challenges = {
-  //   'streaming-events': [{
-  //       name: 'Data Mutation - Converting on the fly data from any datasource including JIRA, Git, etc.',
-  //       value: 'data-mutation'
-  //     }, {
-  //       name: 'Performance - Massive Event data download and processing on the front end is very slow.',
-  //       value: 'performance'
-  //     }, {
-  //       name: 'Work Categorization - Ability to categorize batches of unstructured and nonstandard commits from source code repo systems.',
-  //       value: 'data-mutation'
-  //     }, {
-  //       name: 'Unknown Problem Area',
-  //       value: ''
-  //     }]
-  // };
+  var challenges = [{
+    name: 'Data Mutation',
+    value: 'data-mutation'
+  }, {
+    name: 'Performance',
+    value: 'performance'
+  }, {
+    name: 'Work Categorization',
+    value: 'data-mutation'
+  }, {
+    name: 'Unknown Problem Area',
+    value: ''
+  }];
 
   return {
     // When a user runs `git cz`, prompter will
@@ -75,24 +73,21 @@ module.exports = function (options) {
         }, {
           type: 'input',
           name: 'subject',
-          message: 'Write a short, imperative tense description of the change:\n'
-        }, {
-          type: 'input',
-          name: 'body',
-          message: 'Provide a longer description of the change:\n'
+          message: 'Write a technical description of the change:\n'
         }, {
           type: 'input',
           name: 'hours',
-          message: 'Provide the # of hours spent on this commit (ex: "2" or "2.5"):\n'
+          message: 'Specify how much time was spent on this commit. (ex: "2 h", "2.5 hours", "5 mins", "1 day", etc):\n'
         }, {
           type: 'list',
           name: 'project',
           message: 'Select the project this commit should fall into:',
           choices: projects
         }, {
-          type: 'input',
-          name: 'footer',
-          message: 'List any breaking changes or issues closed by this change:\n'
+          type: 'list',
+          name: 'challenge',
+          message: 'Select the project this commit should fall into:',
+          choices: challenges
         }
       ]).then(function(answers) {
 
@@ -108,9 +103,6 @@ module.exports = function (options) {
         // Hard limit this line
         var head = (answers.type + ': ' + answers.subject.trim()).slice(0, maxLineWidth);
 
-        // Wrap these lines at 100 characters
-        var body = wrap(answers.body, wrapOptions);
-
         // Add SRED.io code
         var hours = '';
         var project = '';
@@ -123,15 +115,17 @@ module.exports = function (options) {
           project = '-p ' + answers.project;
         }
 
-        var sred = ''
-
-        if (hours || project) {
-          sred = 'sred ' + [hours, project].join(' ')
+        if (answers.challenge.trim()) {
+          challenge = '-c ' + answers.challenge;
         }
 
-        var footer = wrap(answers.footer, wrapOptions);
+        var sred = ''
 
-        commit([head, body, footer, sred].join('\n\n'));
+        if (hours || project || challenge) {
+          sred = 'sred ' + [hours, project, challenge].join(' ')
+        }
+
+        commit([head, sred].join('\n\n'));
       });
     }
   };
