@@ -18,7 +18,7 @@ module.exports = function (options) {
       name: rightPad(key + ':', length) + ' ' + type.description,
       value: key
     };
-  });
+  }); 
 
   var projects = [{
     name: 'Pricing engine and anything related to the eventual calculation of a price.',
