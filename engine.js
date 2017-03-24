@@ -21,18 +21,28 @@ module.exports = function (options) {
   }); 
 
   var projects = [{
-    name: 'Pricing engine and anything related to the eventual calculation of a price.',
-    value: 'pricing-engine'
+    name: 'Streaming Event Data - Real-Time Streaming and Translation of Event Data From External Systems.',
+    value: 'streaming-events'
   }, {
-    name: 'API v2 and migration to API v2',
-    value: 'api-v2'
-  }, {
-    name: 'Data Warehousing and tracking',
-    value: 'data-warehousing-tracking'
-  }, {
-    name: 'Other (or if you have no idea)',
+    name: 'No SR&ED Project',
     value: ''
   }];
+
+  // var challenges = {
+  //   'streaming-events': [{
+  //       name: 'Data Mutation - Converting on the fly data from any datasource including JIRA, Git, etc.',
+  //       value: 'data-mutation'
+  //     }, {
+  //       name: 'Performance - Massive Event data download and processing on the front end is very slow.',
+  //       value: 'performance'
+  //     }, {
+  //       name: 'Work Categorization - Ability to categorize batches of unstructured and nonstandard commits from source code repo systems.',
+  //       value: 'data-mutation'
+  //     }, {
+  //       name: 'Unknown Problem Area',
+  //       value: ''
+  //     }]
+  // };
 
   return {
     // When a user runs `git cz`, prompter will
