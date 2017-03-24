@@ -109,21 +109,21 @@ module.exports = function (options) {
         var challenge = '';
 
         if (answers.hours.trim()) {
-          hours = '-d ' + answers.hours.trim();
+          hours = ' -d ' + answers.hours.trim();
         }
  
         if (answers.project.trim() && answers.project !== "") {
-          project = '-p ' + answers.project;
+          project = ' -p ' + answers.project;
         }
 
         if (answers.challenge.trim() && answers.challenge !== "") {
-          challenge = '-c ' + answers.challenge;
+          challenge = ' -c ' + answers.challenge;
         }
 
         var sred = ''
 
         if (hours) {
-          sred = 'sred ' + [hours].join(' ');
+          sred = 'sred' + [hours].join(' ');
         }
 
         if (project != '') {
