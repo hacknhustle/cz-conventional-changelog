@@ -90,14 +90,13 @@ module.exports = function (options) {
         }
       ]).then(function(answers) {
 
-        var wrapOptions = {
-          trim: true,
-          newline: '\n',
-          indent:''
-        };
+        // var wrapOptions = {
+        //   trim: false,
+        //   newline: '\n',
+        //   indent:''
+        // };
 
-        // Hard limit this line
-        var head = (answers.type + ': ' + answers.subject.trim());
+        var head = (answers.type + ': ' + answers.subject);
 
         // Add SRED.io code
         var hours = '';
