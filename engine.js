@@ -55,7 +55,6 @@ module.exports = function (options) {
     // By default, we'll de-indent your commit
     // template and will keep empty lines.
     prompter: function(cz, commit) {
-      console.log('\nLine 1 will be cropped at 100 characters. All other lines will be wrapped after 100 characters.\n');
 
       // Let's ask some questions of the user
       // so that we can populate our commit
@@ -91,17 +90,14 @@ module.exports = function (options) {
         }
       ]).then(function(answers) {
 
-        var maxLineWidth = 100;
-
         var wrapOptions = {
           trim: true,
           newline: '\n',
-          indent:'',
-          width: maxLineWidth
+          indent:''
         };
 
         // Hard limit this line
-        var head = (answers.type + ': ' + answers.subject.trim()).slice(0, maxLineWidth);
+        var head = (answers.type + ': ' + answers.subject.trim());
 
         // Add SRED.io code
         var hours = '';
